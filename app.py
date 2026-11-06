@@ -83,8 +83,9 @@ def ch_usrname():
     usr *=-1
     if usr == 1:
         user_name.configure(state="readonly")
-        credit["username"]=user_name.get()
-        user_name.insert(0,credit["username"])
+        credit["username"] = user_name.get()
+        user_name.delete(0, "end")
+        user_name.insert(0, credit["username"])
         ch_usr.configure(text="Change Username")
         with open('credits.json','w') as f:
             json.dump(credit,f,indent=4)
@@ -99,8 +100,9 @@ def ch_password():
     pas *=-1
     if pas == 1:
         password.configure(state="readonly",show="*")
-        credit["password"]=password.get()
-        password.insert(0,credit["password"])
+        credit["password"] = password.get()
+        password.delete(0, "end")
+        password.insert(0, credit["password"])
         ch_pass.configure(text="Change Password")
         with open('credits.json','w') as f:
             json.dump(credit,f,indent=4)
@@ -161,9 +163,9 @@ def pan_chk():
                  side_pannel.rowconfigure(side_i1, weight=1)
                 
             side_pannel.grid(row=0, column=0, sticky="ew")
-            spacer.grid(row=1, column=0, sticky="ew")
-            spacer.configure(app_window, fg_color="transparent", height=0,width=0)
             spacer.grid_forget()
+            spacer.configure(fg_color="transparent", height=0, width=0)
+            app_window.rowconfigure(2, weight=1)
             main_frame.grid(row=2, column=0, sticky="nswe")
 
 
@@ -184,7 +186,8 @@ def pan_chk():
                  side_pannel.columnconfigure(side_i2, weight=0)
             side_pannel.rowconfigure(0, weight=1)
             side_pannel.grid(row=0, column=0, sticky="ns",pady=40,padx=10)
-            spacer.configure(app_window, fg_color="transparent", width=10,height=0)
+            spacer.configure(fg_color="transparent", width=10, height=0)
+            app_window.rowconfigure(2, weight=0)
             spacer.grid(row=0, column=1, sticky="ns")
             main_frame.grid(row=0, column=2, sticky="nswe")
 
