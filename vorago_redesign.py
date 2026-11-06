@@ -133,7 +133,8 @@ class VoragoStudio(ctk.CTk):
         left = ctk.CTkFrame(self, fg_color="#171922", corner_radius=0)
         left.grid(row=0, column=0, sticky="nsew")
         left.grid_columnconfigure(0, weight=1)
-        left.grid_rowconfigure((0, 1, 2, 3), weight=1)
+        for row_index in range(4):
+            left.grid_rowconfigure(row_index, weight=1)
         self.label(left, "V O R A G O", 17, PALETTE["gold"], "bold").grid(row=0, column=0, sticky="sw", padx=58, pady=(30, 0))
         hero = ctk.CTkFrame(left, fg_color="transparent")
         hero.grid(row=1, column=0, sticky="nsew", padx=58)
@@ -304,7 +305,8 @@ class VoragoStudio(ctk.CTk):
         search.grid(row=3, column=0, sticky="ew", pady=(0, 16))
         grid = ctk.CTkFrame(page, fg_color="transparent")
         grid.grid(row=4, column=0, sticky="ew")
-        grid.grid_columnconfigure((0, 1), weight=1)
+        grid.grid_columnconfigure(0, weight=1)
+        grid.grid_columnconfigure(1, weight=1)
         cards = []
         for number in range(1, 11):
             lesson = LESSONS[subject].get(number, {})
@@ -325,7 +327,6 @@ class VoragoStudio(ctk.CTk):
                     box.grid()
                 else:
                     box.grid_remove()
-        search.configure(command=filter_cards)
         search.bind("<KeyRelease>", lambda event: filter_cards(search.get()))
 
     def show_lesson(self, subject, number):
