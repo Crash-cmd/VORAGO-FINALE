@@ -7,7 +7,8 @@ import practice_questions as pq
 from math_questions import mtasks
 from phy_questions import ptasks
 from chem_questions import ctasks
-
+import login1
+import login_2
 with open('credits.json','r') as f:
     credit = json.load(f)
 with open('c_ans_storage.json','r') as c_a:
@@ -23,7 +24,7 @@ ACTIVE_THEME_FILE = credit["theme"]
 ACTIVE_APPEARANCE = "dark"
 
 THEME_FILES = {
-    "Default": "app_theme.json",
+    "Purple": "app_theme.json",
     "Rich": "app_theme_black_gold.json",
     "Modern Sleek": "app_theme_clean_modern.json",
     "Cosmic Blue": "app_theme_blue_cosmic.json",
@@ -103,28 +104,6 @@ def ch_password():
         ch_pass.configure(text="Change Password")
         with open('credits.json','w') as f:
             json.dump(credit,f,indent=4)
-
-
-
-
-def font_chk():
-    font_tit = tit_var.get()
-    l =[info_l,font_l]
-    if font_tit =="Liberation Mono":
-        for liber in l:
-            f_size=liber.cget("font")[1]
-            liber.configure(font=("Liberation Mono",f_size))
-        info_l.update()
-    elif font_tit =="Arial":
-        for ari in l:
-            f_size=ari.cget("font")[1]
-            ari.configure(font=("Arial",f_size))
-        info_l.update()
-    elif font_tit =="Fira Sans Condensed":
-        for fsc in l:
-            f_size=fsc.cget("font")[1]
-            fsc.configure(font=("Fira Sans Condensed",f_size))
-        info_l.update()
 
 def heading(parent,content,p,row):
         
@@ -210,7 +189,7 @@ def pan_chk():
             main_frame.grid(row=0, column=2, sticky="nswe")
 
 def build_ui():
-    global Arial_f, Fsc_f, Theme, accurate, ch_pass, ch_usr, chem,chems, chem_d, chem_frame, chem_l, con_var, content, font_frame, font_l, gear_d, gear_l, home_page, icon, info_l, info_user, l_dswitch, lib_mono, logo, logo5, logo_img, logo_label, main_frame, math, math_d, math_frame, math_l, maths, pan_var, pannel_mode, pannel_normal, pannel_text, pannel_ver, password, phy,phys, phy_d, phy_frame, phy_l, placeholder_badge, settings, side_pannel, spacer, t_switch, text_l, tit_var, title_font, user_name,progress
+    global Arial_f, Fsc_f, Theme, accurate, ch_pass, ch_usr, chem,chems, chem_d, chem_frame, chem_l, con_var, content, font_l, gear_d, gear_l, home_page, icon, info_l, info_user, l_dswitch, lib_mono, logo, logo5, logo_img, logo_label, main_frame, math, math_d, math_frame, math_l, maths, pan_var, pannel_mode, pannel_normal, pannel_text, pannel_ver, password, phy,phys, phy_d, phy_frame, phy_l, placeholder_badge, settings, side_pannel, spacer, t_switch, text_l, tit_var, title_font, user_name,progress
 
     set_default_color_theme(os.path.join(BASE_DIR, ACTIVE_THEME_FILE))
     set_appearance_mode(ACTIVE_APPEARANCE)
@@ -382,36 +361,11 @@ def build_ui():
     t_switch.grid(row=1,column=0,sticky="w",padx=8,pady=8)
     Theme.grid(row=0,column=0,sticky="we")
 
-
-    tit_var = StringVar(value="Fira Sans Condensed")
-    con_var = StringVar(value="Fira Sans Condensed")
-
-    font_frame = CTkFrame(settings,corner_radius=20,border_width=3)
-    font_l = CTkLabel(font_frame,text="FONTs",font=("Fira Sans Condensed",40))
-    font_l.grid(column=0,row=0,sticky="w",pady=8,padx=8)
-    title_font = CTkLabel(font_frame,text="Title",font=("Fira Sans Condensed",30))
-    title_font.grid(column=0,row=1,sticky='w',pady=8,padx=8)
-    Arial_f = CTkRadioButton(font_frame,variable=tit_var,value="Arial",text="Arial",font=("Arial",20),command=font_chk)
-    Arial_f.grid(column = 0,row=2,pady=8,padx=8)
-    lib_mono = CTkRadioButton(font_frame,variable=tit_var,value="Liberation Mono",text="Liberation Mono",font=("Liberation Mono",20),command=font_chk)
-    lib_mono.grid(column=1,row=2,pady=8,padx=8)
-    Fsc_f = CTkRadioButton(font_frame,variable=tit_var,value="Fira Sans Condensed",text="Fira Sans",font=("Fira Sans Condensed",20),command=font_chk)
-    Fsc_f.grid(column=2,row=2,pady=8,padx=8)
-    content = CTkLabel(font_frame,text="Content",font=("Fira Sans Condensed",30))
-    content.grid(column=0,row=3,sticky='w',pady=8,padx=8)
-    Arial_f = CTkRadioButton(font_frame,variable=con_var,value="Arial",text="Arial",font=("Arial",20))
-    Arial_f.grid(column = 0,row=4,pady=8,padx=8)
-    lib_mono = CTkRadioButton(font_frame,variable=con_var,value="Liberation Mono",text="Liberation Mono",font=("Liberation Mono",20))
-    lib_mono.grid(column=1,row=4,pady=8,padx=8)
-    Fsc_f = CTkRadioButton(font_frame,variable=con_var,value="Fira Sans Condensed",text="Fira Sans",font=("Fira Sans Condensed",20))
-    Fsc_f.grid(column=2,row=4,pady=8,padx=8)
-    font_frame.grid(column=0,row=1,sticky="ew",pady=10)
-
     pan_var = IntVar(value=2)
     pannel_mode = CTkFrame(settings,corner_radius=20,border_width=3)
     pannel_text= CTkLabel(pannel_mode,text="Pannel Orientation",font=("Fira Sans Condensed",40),corner_radius=20)
     pannel_text.grid(column=0,row=0,sticky="w",pady=8,padx=8)
-    pannel_normal = CTkRadioButton(pannel_mode,text="Horizontal(Default)",font=("Fira Sans Condensed",20),variable=pan_var,value=1,command=pan_chk)
+    pannel_normal = CTkRadioButton(pannel_mode,text="Horizontal(Purple)",font=("Fira Sans Condensed",20),variable=pan_var,value=1,command=pan_chk)
     pannel_normal.grid(column=0,row=1,pady=8,padx=8)
     pannel_ver = CTkRadioButton(pannel_mode,text="Vertical Pannel",font=("Fira Sans Condensed",20),variable=pan_var,value=2,command=pan_chk)
     pannel_ver.grid(column=1,row=1,pady=8,padx=8)
@@ -489,8 +443,6 @@ def build_ui():
     progress.grid(column = 0,row=4,sticky = "ew",pady=8,padx=8)
     for k in range(4):
         settings.rowconfigure(k+1,weight=1)
-        font_frame.rowconfigure(k,weight=1)
-        font_frame.columnconfigure(k,weight=1)
         pannel_mode.rowconfigure(k,weight=1)
         pannel_mode.columnconfigure(k,weight=1)
         progress.rowconfigure(k,weight=1)
@@ -518,13 +470,14 @@ def theme_switch(choice=None):
 
 
 if __name__ == "__main__":
-    app_window = CTk()
-    app_window.geometry("1980x1020")
-    app_window.title("Vorago:Shortcut Learner")
-    logo =PhotoImage(file="images/logo.png")
-    app_window.update_idletasks()
-    app_window.iconphoto(True,logo)
-    build_ui()
-    app_window.mainloop()
-    with open('credits.json','w') as f:
-        json.dump(credit,f,indent=4)
+    if login_2.login_procces == True:
+        app_window = CTk()
+        app_window.geometry("1980x1020")
+        app_window.title("Vorago:Shortcut Learner")
+        logo =PhotoImage(file="images/logo.png")
+        app_window.update_idletasks()
+        app_window.iconphoto(True,logo)
+        build_ui()
+        app_window.mainloop()
+        with open('credits.json','w') as f:
+            json.dump(credit,f,indent=4)
