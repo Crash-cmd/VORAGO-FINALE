@@ -2,59 +2,112 @@
 
 VORAGO is a desktop learning application built with Python and CustomTkinter. It brings together quick-learning shortcuts and practice quizzes for Mathematics, Physics and Chemistry, with a customizable interface.
 
-## Features
+This branch now contains **two ways to experience VORAGO**:
 
-- Subject sections for Mathematics, Physics and Chemistry
-- Shortcut explanations with rules, worked examples and quick applications
-- Multiple-choice practice quizzes with immediate feedback and saved scores
-- Theme selection, light/dark appearance and horizontal/vertical navigation layouts
-- Local login and learner progress information
+1. **Original application** — the existing project entry point, structure and design.
+2. **VORAGO Studio** — a separate, substantial redesign prototype for side-by-side comparison.
 
-## Run the application
+Neither version replaces the other. The original application remains available.
 
-Run the project from its root directory so the existing relative paths to images and JSON data files resolve correctly.
+## Run either version
 
-Install the application dependencies:
+Run commands from the repository root.
+
+Install dependencies:
 
 ```bash
-python -m pip install customtkinter pillow
+python -m pip install -r requirements.txt
 ```
 
-Start the application:
+Launch the original app:
 
 ```bash
 python app.py
 ```
 
-The project currently has no dependency lockfile or automated test suite. The GUI should be exercised locally after installing the dependencies.
+Launch the redesign:
 
-## Review branch: bug fixes and small improvements
+```bash
+python vorago_redesign.py
+```
 
-The branch `review/bug-fixes-and-small-improvements` contains a conservative maintenance pass. The application's learning flow, subject structure and overall design have been retained.
+The redesign writes its own local profile and progress data to `vorago_redesign_data.json`. It does not overwrite `credits.json` or `c_ans_storage.json`.
 
-### Bugs fixed in this branch
+## What VORAGO Studio changes
 
-- **Horizontal panel layout:** removed invalid positional arguments passed to `spacer.configure()`. Selecting the horizontal layout no longer raises a configuration `TypeError`, and the main content row is allowed to expand.
-- **Username and password settings:** clear the entry before restoring the saved value. Previously, saving an edited username or password inserted the same value a second time, duplicating the displayed text.
-- **Physics shortcut 9:** connected the missing practice-question dataset, which previously caused the screen builder to fail because its required `questions_data` argument was absent.
-- **Physics shortcut 10:** connected its own `psc10` question set instead of reusing `psc9`.
-- **Chemistry shortcut 3:** corrected the misspelled `questiion_data` keyword to `questions_data`, allowing the quiz screen to receive its question set.
+The redesign is intentionally a different product experience, not a new theme applied to the old screen.
 
-### Findings to consider next
+### Login and profile
+- A redesigned two-panel welcome screen with a clearer first-run experience.
+- Create-profile and sign-in modes.
+- Passwords are stored as salted PBKDF2-HMAC-SHA256 hashes in the prototype's separate local data file, rather than plain text.
+- Each local profile has its own quiz scores and completion list.
+- This is still a local desktop prototype, not a production account or cloud authentication system.
 
-These are review findings, not changes made in this pass:
+### Main application
+- A persistent left navigation rail for Overview, Mathematics, Physics, Chemistry, Progress and Settings.
+- A dashboard with a welcome panel, learning coverage, average quiz score and subject cards.
+- Separate subject libraries with searchable shortcut cards.
+- Consistent spacing, typography, rounded panels and a restrained dark palette with warm gold accents.
+- A soft light/dark palette toggle.
 
-- **Credential storage:** usernames and passwords are stored directly in `credits.json`. This is not suitable for accounts containing real or reused passwords; a safer authentication design should be considered before distributing the application.
-- **Working-directory dependency:** images and several JSON files are opened using relative paths. Launching `app.py` from outside the repository root may cause file-not-found errors.
-- **Physics quiz content alignment:** the Physics shortcut explanations and their assigned practice sets do not consistently cover the same topic. For example, the P-V slope shortcut is paired with a work-done question set, and the tuning-fork shortcut is paired with a centripetal-acceleration set. The question banks should be reviewed topic by topic before students rely on them for revision.
-- **Progress calculation:** progress is counted when a saved score is non-zero. A completed quiz with a score of zero may therefore appear incomplete.
-- **Repository housekeeping:** the default branch contains generated `__pycache__` content and an `app.py.conflict-backup` file. These should be reviewed and excluded from future commits if they are not intentional project assets.
-- **Automated validation:** there is no test suite or dependency manifest at present. A repeatable smoke-test checklist and pinned dependencies would make future changes safer.
+### Learning flow
+- The redesign reads the existing shortcut titles, principles, rules, worked examples and applications from the current subject modules using Python's AST parser. It does not execute those module functions.
+- It reads the existing multiple-choice question banks from `practice_questions.py`.
+- Each shortcut has a dedicated lesson page followed by a practice quiz.
+- Quiz feedback is immediate; the correct option is highlighted.
+- Progress is based on whether a quiz was completed, so a score of zero still counts as completion.
+- Best scores are saved per local profile.
+
+### Files and safety
+- `app.py` remains the original application.
+- `vorago_redesign.py` is the new alternative entry point.
+- `vorago_redesign_data.json` is generated locally and is not intended to be committed.
+- Existing lesson modules, question banks, themes and original profile/progress files remain in place.
+
+## Comparing the two experiences
+
+| Area | Original VORAGO | VORAGO Studio |
+|---|---|---|
+| Entry point | `python app.py` | `python vorago_redesign.py` |
+| Login | Existing login windows | Unified sign-in / create-profile screen |
+| Navigation | Existing icon panel and subject screens | Persistent labelled left navigation |
+| Home | Basic welcome screen | Dashboard with subject cards and progress |
+| Learning | Existing shortcut screens | Lesson → examples → quiz flow |
+| Search | No unified subject search | Searchable shortcut library |
+| Quiz progress | Existing shared JSON score storage | Per-profile completion and best-score tracking |
+| Theme | Existing theme JSON files | Built-in dark and soft-light palettes |
+| Data | `credits.json`, `c_ans_storage.json` | Separate `vorago_redesign_data.json` |
+
+## Review branch: bug fixes and findings
+
+The conservative maintenance pass also corrected:
+- Horizontal panel layout configuration in `app.py`.
+- Duplicate username/password text when saving settings.
+- Missing Physics shortcut 9 question data.
+- Incorrect Physics shortcut 10 question-set mapping.
+- Misspelled Chemistry shortcut 3 keyword.
+
+Other findings still worth addressing in the original app:
+- Original credentials are stored directly in `credits.json`; avoid using real or reused passwords there.
+- Relative file paths can fail if the original app is launched outside the repository root.
+- Original progress tracking may treat a completed zero-score quiz as incomplete.
+- Some Physics shortcut descriptions and question sets appear mismatched. Review the question banks before relying on those particular quizzes for revision.
+- The repository contains generated `__pycache__` files and an `app.py.conflict-backup` file that should be reviewed for cleanup.
 
 ## Validation status
 
-The fixes above were reviewed against the source code and committed to the review branch. They have **not** been runtime-tested in a local desktop session in this review, so please run the application and test the horizontal/vertical layout, profile editing, Physics shortcuts 9–10 and Chemistry shortcut 3 before merging anything.
+The source changes have been reviewed, but neither GUI has been launched in a local desktop session as part of this GitHub edit. Please test both entry points locally.
+
+For the redesign, test:
+1. Create a new local profile, sign out and sign back in.
+2. Open each subject and search for a shortcut.
+3. Open a lesson and check its principle, rule and examples.
+4. Answer both correct and incorrect quiz options.
+5. Finish a quiz with a score of zero and confirm that it is still marked completed.
+6. Switch between dark and light palettes.
+7. Confirm the original `credits.json` and `c_ans_storage.json` are unchanged by the redesign.
 
 ## Branch safety
 
-All review changes are on `review/bug-fixes-and-small-improvements`. The `main` branch has not been edited or merged.
+All changes are on `review/bug-fixes-and-small-improvements`. The `main` branch has not been edited or merged.
