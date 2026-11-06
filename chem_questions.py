@@ -178,7 +178,7 @@ def ctasks(ctask, chem, chem_frame, heading, paragrah,questions_data):
             example_1="1) Electron falls from n = 4 to ground state:\nLines = 4(4-1)/2 = 6 spectral lines",
             example_2="2) Electron falls from n = 5 to n = 2:\nLines = (5 - 2)(5 - 2 + 1)/2 = (3 × 4)/2 = 6 lines",
             quick_application="Atomic emission spectroscopy analysis\nAstrochem stellar spectrum evaluation",
-            questiion_data=pq.csc3
+            questions_data=pq.csc3
         )
 
     if ctask == 4:
