@@ -253,7 +253,8 @@ def ptasks(ptask, phy, phy_frame, heading, paragrah,questions_data):
             rule="1. Identify atomicity constant γ (C_p/C_v).\n2. Multiply isothermal slope by γ to get adiabatic slope.",
             example_1="1) For a monoatomic gas (γ = 5/3 = 1.67), adiabatic slope is 1.67 times steeper than isothermal slope.",
             example_2="2) Comparing slopes at the exact same P-V point instantly reveals adiabatic vs isothermal behavior.",
-            quick_application="Engine cycle analysis (Carnot, Otto, Diesel cycles)\nAtmospheric thermodynamics"
+            quick_application="Engine cycle analysis (Carnot, Otto, Diesel cycles)\nAtmospheric thermodynamics",
+            questions_data=pq.psc9
         )
 
     if ptask == 10:
@@ -265,5 +266,5 @@ def ptasks(ptask, phy, phy_frame, heading, paragrah,questions_data):
             example_1="1) Tuning fork gives 4 beats/sec with 256 Hz fork. When loaded with wax, beat frequency decreases to 2. Frequency is 260 Hz.",
             example_2="2) Filing a prong increases frequency, helping resolve ambiguous beat frequency directions in acoustic problems.",
             quick_application="Musical instrument tuning\nAcoustic calibration",
-            questions_data=pq.psc9
+            questions_data=pq.psc10
         )
