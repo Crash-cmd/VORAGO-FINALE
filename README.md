@@ -46,6 +46,7 @@ These are review findings, not changes made in this pass:
 
 - **Credential storage:** usernames and passwords are stored directly in `credits.json`. This is not suitable for accounts containing real or reused passwords; a safer authentication design should be considered before distributing the application.
 - **Working-directory dependency:** images and several JSON files are opened using relative paths. Launching `app.py` from outside the repository root may cause file-not-found errors.
+- **Physics quiz content alignment:** the Physics shortcut explanations and their assigned practice sets do not consistently cover the same topic. For example, the P-V slope shortcut is paired with a work-done question set, and the tuning-fork shortcut is paired with a centripetal-acceleration set. The question banks should be reviewed topic by topic before students rely on them for revision.
 - **Progress calculation:** progress is counted when a saved score is non-zero. A completed quiz with a score of zero may therefore appear incomplete.
 - **Repository housekeeping:** the default branch contains generated `__pycache__` content and an `app.py.conflict-backup` file. These should be reviewed and excluded from future commits if they are not intentional project assets.
 - **Automated validation:** there is no test suite or dependency manifest at present. A repeatable smoke-test checklist and pinned dependencies would make future changes safer.
